@@ -64,7 +64,10 @@ class _PerguntasAppState extends State<PerguntasApp> {
                 ],
               )
             : const Center(
-                child: Text('Parabéns'),
+                child: Text(
+                  'Parabéns',
+                  style: TextStyle(fontSize: 30),
+                ),
               ),
       ),
     );
