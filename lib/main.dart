@@ -15,12 +15,21 @@ class PerguntasApp extends StatefulWidget {
 }
 
 class _PerguntasAppState extends State<PerguntasApp> {
-  final List<String> questions = [
-    "Qual é a sua cor favorita?",
-    "Qual é a sua fruta favorita?"
-  ];
-
   int _indexQuestion = 0;
+  List<Map<String, Object>> questions = [
+    {
+      "text": "Qual é a sua cor favorita?",
+      "answers": ['Azul', 'Verde', 'Vermelho', 'Branca']
+    },
+    {
+      "text": "Qual é a sua fruta favorita?",
+      "answers": ['Morango', 'Maça', 'Laranja', 'Banana']
+    },
+    {
+      "text": "Qual animal mais forte?",
+      "answers": ['Leão', 'Galo', 'Gato', 'Elefantes']
+    }
+  ];
 
   void _toAnswer() {
     if (_indexQuestion < questions.length - 1) {
@@ -32,6 +41,13 @@ class _PerguntasAppState extends State<PerguntasApp> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> myAnswers =
+        questions[_indexQuestion]['answers'] as List<String>;
+
+    List<Widget> answersWidgets = myAnswers
+        .map((ans) => Answers(answer: ans, onAnswer: _toAnswer))
+        .toList();
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -39,11 +55,10 @@ class _PerguntasAppState extends State<PerguntasApp> {
           centerTitle: true,
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Question(question: questions[_indexQuestion]),
-            Answers(answer: 'Resposta AA', onAnswer: _toAnswer),
-            Answers(answer: 'Resposta BB', onAnswer: _toAnswer),
-            Answers(answer: 'Resposta CC', onAnswer: _toAnswer),
+            Question(question: questions[_indexQuestion]['text'].toString()),
+            ...answersWidgets
           ],
         ),
       ),
