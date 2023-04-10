@@ -31,18 +31,18 @@ class _PerguntasAppState extends State<PerguntasApp> {
     }
   ];
 
+  bool get isNotFinal => _indexQuestion < questions.length;
+
   void _toAnswer() {
-    if (_indexQuestion < questions.length - 1) {
-      setState(() {
-        _indexQuestion += 1;
-      });
-    }
+    setState(() {
+      _indexQuestion += 1;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     List<String> myAnswers =
-        questions[_indexQuestion]['answers'] as List<String>;
+        isNotFinal ? questions[_indexQuestion]['answers'] as List<String> : [];
 
     List<Widget> answersWidgets = myAnswers
         .map((ans) => Answers(answer: ans, onAnswer: _toAnswer))
@@ -54,13 +54,18 @@ class _PerguntasAppState extends State<PerguntasApp> {
           title: const Text('Perguntas e Respostas'),
           centerTitle: true,
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Question(question: questions[_indexQuestion]['text'].toString()),
-            ...answersWidgets
-          ],
-        ),
+        body: isNotFinal
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Question(
+                      question: questions[_indexQuestion]['text'].toString()),
+                  ...answersWidgets
+                ],
+              )
+            : const Center(
+                child: Text('Parabéns'),
+              ),
       ),
     );
   }
