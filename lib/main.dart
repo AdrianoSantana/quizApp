@@ -41,9 +41,9 @@ class _PerguntasAppState extends State<PerguntasApp> {
         body: Column(
           children: [
             Question(question: questions[_indexQuestion]),
-            const Answers(answer: 'Resposta AA'),
-            const Answers(answer: 'Resposta BB'),
-            const Answers(answer: 'Resposta CC'),
+            Answers(answer: 'Resposta AA', onAnswer: _toAnswer),
+            Answers(answer: 'Resposta BB', onAnswer: _toAnswer),
+            Answers(answer: 'Resposta CC', onAnswer: _toAnswer),
           ],
         ),
       ),
